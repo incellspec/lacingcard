@@ -40,12 +40,21 @@
             border: none;
             font-weight: bold;
             cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-size: 14px;
             transition: all 0.2s;
             box-shadow: 0 4px 0 rgba(0,0,0,0.1);
         }
 
         .btn-nav { background: white; border: 2px solid #854d0e; color: #854d0e; }
         .btn-nav.active { background: #fef08a; transform: translateY(2px); box-shadow: none; }
+        
+        /* Styled the Home button specifically */
+        .btn-home { background: #854d0e; color: white; }
+        .btn-home:hover { background: #a16207; }
+
         .btn-action { color: white; }
         .btn-clear { background: #ef4444; }
         .btn-save { background: #3b82f6; }
@@ -68,6 +77,9 @@
 
     <div class="controls">
         <div class="btn-group">
+            <!-- Added Home Link Here -->
+            <a href="https://trialtracing.my.canva.site/crittercreativecorner/lacing-cards" class="btn btn-home">🏡 Home</a>
+            
             <button class="btn btn-nav" id="btn-barn" onclick="loadFarm('barn')">🏠 Barn</button>
             <button class="btn btn-nav" id="btn-tractor" onclick="loadFarm('tractor')">🚜 Tractor</button>
             <button class="btn btn-nav" id="btn-egg" onclick="loadFarm('egg')">🥚 Golden Egg</button>
@@ -97,12 +109,9 @@
                 draw: () => {
                     ctx.fillStyle = '#bae6fd'; ctx.fillRect(0,0,600,500);
                     ctx.fillStyle = '#4ade80'; ctx.fillRect(0,350,600,150);
-                    // Main Structure
                     ctx.fillStyle = '#dc2626'; ctx.fillRect(150, 200, 300, 180);
-                    // Roof
                     ctx.fillStyle = '#991b1b'; ctx.beginPath();
                     ctx.moveTo(130, 200); ctx.lineTo(300, 80); ctx.lineTo(470, 200); ctx.fill();
-                    // Detail Trim
                     ctx.strokeStyle = 'white'; ctx.lineWidth = 4;
                     ctx.strokeRect(170, 220, 260, 140);
                     ctx.beginPath(); ctx.moveTo(170, 220); ctx.lineTo(430, 360); ctx.stroke();
@@ -116,13 +125,10 @@
             tractor: {
                 draw: () => {
                     ctx.fillStyle = '#fef9c3'; ctx.fillRect(0,0,600,500);
-                    // Tractor Body
                     ctx.fillStyle = '#16a34a'; ctx.fillRect(180, 220, 240, 80);
                     ctx.fillRect(320, 140, 100, 80);
-                    // Big Wheel
                     ctx.fillStyle = '#1f2937'; ctx.beginPath(); ctx.arc(230, 320, 70, 0, Math.PI*2); ctx.fill();
                     ctx.fillStyle = '#9ca3af'; ctx.beginPath(); ctx.arc(230, 320, 25, 0, Math.PI*2); ctx.fill();
-                    // Small Wheel
                     ctx.fillStyle = '#1f2937'; ctx.beginPath(); ctx.arc(420, 340, 45, 0, Math.PI*2); ctx.fill();
                     ctx.fillStyle = '#9ca3af'; ctx.beginPath(); ctx.arc(420, 340, 15, 0, Math.PI*2); ctx.fill();
                 },
@@ -135,10 +141,8 @@
             egg: {
                 draw: () => {
                     ctx.fillStyle = '#fff7ed'; ctx.fillRect(0,0,600,500);
-                    // Nest
                     ctx.strokeStyle = '#d97706'; ctx.lineWidth = 15;
                     ctx.beginPath(); ctx.ellipse(300, 400, 200, 40, 0, 0, Math.PI*2); ctx.stroke();
-                    // The Egg
                     const grad = ctx.createRadialGradient(250, 200, 20, 300, 250, 200);
                     grad.addColorStop(0, '#fef08a');
                     grad.addColorStop(1, '#facc15');
@@ -170,7 +174,6 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             farmData[activeFarm].draw();
 
-            // Lacing String (Thick Purple Rope)
             if (lacedPath.length > 1) {
                 ctx.setLineDash([]);
                 ctx.strokeStyle = '#7e22ce'; 
@@ -182,13 +185,11 @@
                 for (let i = 1; i < lacedPath.length; i++) ctx.lineTo(lacedPath[i].x, lacedPath[i].y);
                 ctx.stroke();
                 
-                // Add a "thread" detail
                 ctx.strokeStyle = 'rgba(255,255,255,0.3)';
                 ctx.lineWidth = 3;
                 ctx.stroke();
             }
 
-            // Holes
             holes.forEach(h => {
                 ctx.beginPath();
                 ctx.arc(h.x, h.y, 16, 0, Math.PI * 2);
